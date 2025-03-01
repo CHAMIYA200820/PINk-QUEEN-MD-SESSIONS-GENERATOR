@@ -56,7 +56,7 @@ router.get('/', async (req, res) => {
                let b64data = Buffer.from(data).toString('base64');
                let session = await Pair_Code_By_Gifted_Tech.sendMessage(Pair_Code_By_Gifted_Tech.user.id, { text: '' + b64data });
 
-               let PINk QUEEN MD_TEXT = `
+               let PINk_QUEEN_MD_TEXT = `
 ┏━━━━━━━━━━━━━━
 ┃PINk QUEEN MD SESSIONS
 ┃ARE
@@ -82,7 +82,7 @@ _Don't Forget To Give Star To My Repo_`
         return await removeFile('./temp/'+id);
             } else if (connection === "close" && lastDisconnect && lastDisconnect.error && lastDisconnect.error.output.statusCode != 401) {
                     await delay(10000);
-                    PINk_QUEEN_MD_PAIR_CODE();
+                    GIFTED_MD_PAIR_CODE();
                 }
             });
         } catch (err) {
@@ -93,6 +93,6 @@ _Don't Forget To Give Star To My Repo_`
          }
         }
     }
-    return await PINk_QUEEN_MD_PAIR_CODE()
+    return await GIFTED_MD_PAIR_CODE()
 });
 module.exports = router
