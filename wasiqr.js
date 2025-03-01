@@ -60,19 +60,19 @@ router.get('/', async (req, res) => {
 	
 				   let TREX_MD_TEXT = `
 ┏━━━━━━━━━━━━━━
-𝐈𝐓𝐒 𝐏𝐎𝐏𝐊𝐈𝐃 𝐌𝐃 𝐁𝐎𝐓 
+𝐈𝐓𝐒 PINk_QUEEN_MD 𝐁𝐎𝐓 
 𝐘𝐎𝐔 𝐀𝐑𝐄 𝐒𝐔𝐂𝐂𝐄𝐒𝐒𝐅𝐔𝐋𝐋𝐘 𝐂𝐎𝐍𝐍𝐄𝐂𝐓𝐄𝐃
 > 𝐃𝐄𝐕 𝐏𝐎𝐏𝐊𝐈𝐃
 ┗━━━━━━━━━━━━━━━
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-𝐏𝐎𝐏𝐊𝐈𝐃 𝐏𝐑𝐎𝐉𝐄𝐂𝐓𝐒
+𝐏𝐎𝐏𝐊𝐈𝐃 CHAMINDU
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-𝐖𝐇𝐀𝐓𝐒𝐀𝐏𝐏 𝐏𝐀𝐆𝐄 = https://whatsapp.com/channel/0029VajJTJp2f3ELCm8FN50D
+𝐖𝐇𝐀𝐓𝐒𝐀𝐏𝐏 𝐏𝐀𝐆𝐄 = https://whatsapp.com/channel/0029Vb0rCUr72WU3uq0yMg42
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 𝐂𝐎𝐍𝐓𝐀𝐂𝐓 𝐌𝐄 𝐕𝐈𝐀
-𝐌𝐘 𝐋𝐈𝐍𝐊?https://wa.me/2544732297194?
+𝐌𝐘 𝐋𝐈𝐍𝐊?https://wa.me/94783314361?
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-*𝐏𝐎𝐏𝐊𝐈𝐃*
+*CHAMINDU*
 _____________________________________
 	
 _DONT FORGET TO FORK AND STAR MY REPO_`
