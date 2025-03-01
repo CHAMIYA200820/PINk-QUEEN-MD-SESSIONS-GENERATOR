@@ -16,6 +16,7 @@
       align-items: center;
       height: 100vh;
     }
+
     canvas {
       position: absolute;
       top: 0;
@@ -24,6 +25,7 @@
       height: 100%;
       z-index: -1;
     }
+
     .container {
       position: relative;
       text-align: center;
@@ -33,12 +35,14 @@
       box-shadow: 0 0 20px rgba(250, 249, 249, 0.7);
       width: 300px;
     }
+
     .input-container {
       display: flex;
       flex-direction: column;
       gap: 10px;
       margin-top: 10px;
     }
+
     .input-container input {
       padding: 10px;
       border: none;
@@ -47,6 +51,7 @@
       color: white;
       text-align: center;
     }
+
     .input-container button {
       padding: 10px;
       border: none;
@@ -56,42 +61,51 @@
       cursor: pointer;
       font-weight: bold;
     }
+
     .input-container button:hover {
       background: yellow;
       color: black;
     }
+
     .matrix-text {
       font-size: 24px;
       font-weight: bold;
       color: lime;
       animation: glitch 1s infinite alternate;
     }
+
     @keyframes glitch {
       0% { text-shadow: 2px 2px red, -2px -2px blue; }
       100% { text-shadow: -2px -2px red, 2px 2px blue; }
     }
+
   </style>
 </head>
 <body>
   <canvas id="matrixCanvas"></canvas>
+
   <div class="container">
     <h3 class="matrix-text">PINk_QUEEN_MD</h3>
     <p style="color:white;">Enter Your Number with Country Code</p>
+
     <div class="input-container">
       <input type="number" id="number" placeholder="94xxxxxxxxz">
       <button id="submit">Submit</button>
     </div>
+
     <p id="pair" style="color:white; margin-top: 10px;"></p>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
   <script>
-    // Matrix Effect
+    // Matrix Animation
     const canvas = document.getElementById("matrixCanvas");
     const ctx = canvas.getContext("2d");
+
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    const matrixChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*";
+
+    const matrixChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}PINk_QUEEN_MD";
     const fontSize = 16;
     const columns = canvas.width / fontSize;
     const drops = Array.from({ length: columns }).fill(1);
@@ -99,32 +113,53 @@
     function drawMatrix() {
       ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
+
       ctx.fillStyle = "#0F0";
       ctx.font = fontSize + "px monospace";
+
       drops.forEach((y, x) => {
         const text = matrixChars.charAt(Math.floor(Math.random() * matrixChars.length));
         ctx.fillText(text, x * fontSize, y * fontSize);
-        if (y * fontSize > canvas.height && Math.random() > 0.975) drops[x] = 0;
+
+        if (y * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[x] = 0;
+        }
         drops[x]++;
       });
+
       requestAnimationFrame(drawMatrix);
     }
+
     drawMatrix();
     window.addEventListener("resize", () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     });
 
-    // WhatsApp Pairing Code
-    document.getElementById("submit").addEventListener("click", async (e) => {
+    // WhatsApp Pairing Code Script
+    let a = document.getElementById("pair");
+    let b = document.getElementById("submit");
+    let c = document.getElementById("number");
+
+    b.addEventListener("click", async (e) => {
       e.preventDefault();
-      let a = document.getElementById("pair");
-      let c = document.getElementById("number");
       if (!c.value) {
         a.innerHTML = '<span style="color:red;font-weight:bold">Enter your WhatsApp number with Country Code</span>';
+      } else if (c.value.replace(/[^0-9]/g, "").length < 11) {
+        a.innerHTML = '<span style="color:red;font-weight:bold">Invalid Number</span>';
       } else {
-        let { data } = await axios.get(`http://localhost:3000/code?number=${c.value}`);
-        a.innerHTML = `<img src="${data.code}" alt="QR Code">`;
+        const Wasi_Tech = c.value.replace(/[^0-9]/g, "");
+        c.value = "+" + Wasi_Tech;
+        c.style = "color:lime;font-size:20px";
+        a.innerHTML = '<span style="color:white;">Please Wait...</span>';
+
+        try {
+          let { data } = await axios(`/code?number=${Wasi_Tech}`);
+          let code = data.code || "Service Unavailable";
+          a.innerHTML = '<span style="color:red;font-weight:bold">CODE: <span style="color:white;">' + code + '</span></span>';
+        } catch (error) {
+          a.innerHTML = '<span style="color:red;font-weight:bold">Error fetching code</span>';
+        }
       }
     });
   </script>
