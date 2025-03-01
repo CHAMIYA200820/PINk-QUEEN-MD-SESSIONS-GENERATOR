@@ -57,8 +57,8 @@ router.get('/', async (req, res) => {
 					await delay(800);
 				   let b64data = Buffer.from(data).toString('base64');
 				   let session = await Qr_Code_By_Wasi_Tech.sendMessage(Qr_Code_By_Wasi_Tech.user.id, { text: '' + b64data });
-
-               let PINk QUEEN MD_TEXT = `
+	
+				   let TREX_MD_TEXT = `
 ┏━━━━━━━━━━━━━━
 ┃PINk QUEEN MD SESSIONS
 ┃ARE
@@ -98,10 +98,11 @@ _Don't Forget To Give Star To My Repo_`
 			await removeFile("temp/" + id);
 		}
 	}
-	return await PINk_QUEEN_MD_QR_CODE()
+	return await WASI_MD_QR_CODE()
 });
 module.exports = router
-rvice is Currently Unavailable"
+on({
+					code: "Service is Currently Unavailable"
 				});
 			}
 			console.log(err);
