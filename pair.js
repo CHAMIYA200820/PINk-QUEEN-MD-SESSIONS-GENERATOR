@@ -56,7 +56,7 @@ router.get('/', async (req, res) => {
                let b64data = Buffer.from(data).toString('base64');
                let session = await Pair_Code_By_Gifted_Tech.sendMessage(Pair_Code_By_Gifted_Tech.user.id, { text: '' + b64data });
 
-               let PINk_QUEEN_MD_TEXT = `
+               let GIFTED_MD_TEXT = `
 ┏━━━━━━━━━━━━━━
 ┃PINk QUEEN MD SESSIONS
 ┃ARE
