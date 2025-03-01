@@ -79,6 +79,38 @@
       100% { text-shadow: -2px -2px red, 2px 2px blue; }
     }
 
+    /* Pairing Code Display */
+    .pair-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 10px;
+      gap: 10px;
+    }
+
+    .pair-code {
+      font-size: 20px;
+      font-weight: bold;
+      color: white;
+      background: #111;
+      padding: 5px 10px;
+      border-radius: 5px;
+      display: inline-block;
+    }
+
+    .copy-btn {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      background: lime;
+      color: black;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .copy-btn:hover {
+      background: yellow;
+    }
   </style>
 </head>
 <body>
@@ -89,11 +121,16 @@
     <p style="color:white;">Enter Your Number with Country Code</p>
 
     <div class="input-container">
-      <input type="number" id="number" placeholder="94xxxxxxxxz">
+      <input type="number" id="number" placeholder="94xxxxxxxx">
       <button id="submit">Submit</button>
     </div>
 
-    <p id="pair" style="color:white; margin-top: 10px;"></p>
+    <div class="pair-container" id="pair-container" style="display: none;">
+      <span class="pair-code" id="pair-code"></span>
+      <button class="copy-btn" id="copy-btn">Copy</button>
+    </div>
+    
+    <p id="pair-message" style="color:white; margin-top: 10px;"></p>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
@@ -137,30 +174,44 @@
     });
 
     // WhatsApp Pairing Code Script
-    let a = document.getElementById("pair");
-    let b = document.getElementById("submit");
-    let c = document.getElementById("number");
+    let pairMessage = document.getElementById("pair-message");
+    let submitBtn = document.getElementById("submit");
+    let numberInput = document.getElementById("number");
+    let pairContainer = document.getElementById("pair-container");
+    let pairCode = document.getElementById("pair-code");
+    let copyBtn = document.getElementById("copy-btn");
 
-    b.addEventListener("click", async (e) => {
+    submitBtn.addEventListener("click", async (e) => {
       e.preventDefault();
-      if (!c.value) {
-        a.innerHTML = '<span style="color:red;font-weight:bold">Enter your WhatsApp number with Country Code</span>';
-      } else if (c.value.replace(/[^0-9]/g, "").length < 11) {
-        a.innerHTML = '<span style="color:red;font-weight:bold">Invalid Number</span>';
+      if (!numberInput.value) {
+        pairMessage.innerHTML = '<span style="color:red;font-weight:bold">Enter your WhatsApp number with Country Code</span>';
+      } else if (numberInput.value.replace(/[^0-9]/g, "").length < 11) {
+        pairMessage.innerHTML = '<span style="color:red;font-weight:bold">Invalid Number</span>';
       } else {
-        const Wasi_Tech = c.value.replace(/[^0-9]/g, "");
-        c.value = "+" + Wasi_Tech;
-        c.style = "color:lime;font-size:20px";
-        a.innerHTML = '<span style="color:white;">Please Wait...</span>';
+        const Wasi_Tech = numberInput.value.replace(/[^0-9]/g, "");
+        numberInput.value = "+" + Wasi_Tech;
+        numberInput.style = "color:lime;font-size:20px";
+        pairMessage.innerHTML = '<span style="color:white;">Please Wait...</span>';
 
         try {
           let { data } = await axios(`/code?number=${Wasi_Tech}`);
           let code = data.code || "Service Unavailable";
-          a.innerHTML = '<span style="color:red;font-weight:bold">CODE: <span style="color:white;">' + code + '</span></span>';
+
+          // Show the Pair Code
+          pairCode.innerText = code;
+          pairContainer.style.display = "flex";
+          pairMessage.innerHTML = "";
         } catch (error) {
-          a.innerHTML = '<span style="color:red;font-weight:bold">Error fetching code</span>';
+          pairMessage.innerHTML = '<span style="color:red;font-weight:bold">Error fetching code</span>';
         }
       }
+    });
+
+    // Copy Function
+    copyBtn.addEventListener("click", () => {
+      navigator.clipboard.writeText(pairCode.innerText);
+      copyBtn.innerText = "Copied!";
+      setTimeout(() => copyBtn.innerText = "Copy", 2000);
     });
   </script>
 </body>
