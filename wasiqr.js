@@ -1,97 +1,103 @@
 const PastebinAPI = require('pastebin-js'),
-pastebin = new PastebinAPI('EMWTMkQAVfJa9kM-MRUrxd5Oku1U7pgL');
-
-const { makeid } = require('./id');
+pastebin = new PastebinAPI('EMWTMkQAVfJa9kM-MRUrxd5Oku1U7pgL')
+const {makeid} = require('./id');
 const QRCode = require('qrcode');
 const express = require('express');
-const fs = require('fs');
 const path = require('path');
+const fs = require('fs');
+let router = express.Router()
 const pino = require("pino");
-
 const {
-    default: Wasi_Tech,
-    useMultiFileAuthState,
-    Browsers,
-    delay
+	default: Wasi_Tech,
+	useMultiFileAuthState,
+	jidNormalizedUser,
+	Browsers,
+	delay,
+	makeInMemoryStore,
 } = require("@whiskeysockets/baileys");
 
-let router = express.Router();
-
 function removeFile(FilePath) {
-    if (!fs.existsSync(FilePath)) return false;
-    fs.rmSync(FilePath, { recursive: true, force: true });
-}
-
+	if (!fs.existsSync(FilePath)) return false;
+	fs.rmSync(FilePath, {
+		recursive: true,
+		force: true
+	})
+};
+const {
+	readFile
+} = require("node:fs/promises")
 router.get('/', async (req, res) => {
-    const id = makeid();
+	const id = makeid();
+	async function WASI_MD_QR_CODE() {
+		const {
+			state,
+			saveCreds
+		} = await useMultiFileAuthState('./temp/' + id)
+		try {
+			let Qr_Code_By_Wasi_Tech = Wasi_Tech({
+				auth: state,
+				printQRInTerminal: false,
+				logger: pino({
+					level: "silent"
+				}),
+				browser: Browsers.macOS("Desktop"),
+			});
 
-    async function WASI_MD_QR_CODE() {
-        const { state, saveCreds } = await useMultiFileAuthState('./temp/' + id);
-        try {
-            let Qr_Code_By_Wasi_Tech = Wasi_Tech({
-                auth: state,
-                printQRInTerminal: false,
-                logger: pino({ level: "silent" }),
-                browser: Browsers.macOS("Desktop"),
-            });
-
-            Qr_Code_By_Wasi_Tech.ev.on('creds.update', saveCreds);
-            Qr_Code_By_Wasi_Tech.ev.on("connection.update", async (s) => {
-                const { connection, lastDisconnect, qr } = s;
-
-                if (qr) {
-                    let qrBuffer = await QRCode.toBuffer(qr, {
-                        color: {
-                            dark: "#FF1493", // Pink Foreground
-                            light: "#000000" // Black Background
-                        }
-                    });
-                    return res.end(qrBuffer);
-                }
-
-                if (connection == "open") {
-                    await delay(5000);
-                    let data = fs.readFileSync(__dirname + `/temp/${id}/creds.json`);
-                    await delay(800);
-                    let b64data = Buffer.from(data).toString('base64');
-                    let session = await Qr_Code_By_Wasi_Tech.sendMessage(Qr_Code_By_Wasi_Tech.user.id, { text: b64data });
-
-                    let TREX_MD_TEXT = `
+			Qr_Code_By_Wasi_Tech.ev.on('creds.update', saveCreds)
+			Qr_Code_By_Wasi_Tech.ev.on("connection.update", async (s) => {
+				const {
+					connection,
+					lastDisconnect,
+					qr
+				} = s;
+				if (qr) await res.end(await QRCode.toBuffer(qr));
+				if (connection == "open") {
+					await delay(5000);
+					let data = fs.readFileSync(__dirname + `/temp/${id}/creds.json`);
+					await delay(800);
+				   let b64data = Buffer.from(data).toString('base64');
+				   let session = await Qr_Code_By_Wasi_Tech.sendMessage(Qr_Code_By_Wasi_Tech.user.id, { text: '' + b64data });
+	
+				   let TREX_MD_TEXT = `
 ┏━━━━━━━━━━━━━━
-┃ PINk QUEEN MD SESSIONS
-┃ ARE CONNECTED 💙🔵
+𝐈𝐓𝐒 PINk_QUEEN_MD 𝐁𝐎𝐓 
+𝐘𝐎𝐔 𝐀𝐑𝐄 𝐒𝐔𝐂𝐂𝐄𝐒𝐒𝐅𝐔𝐋𝐋𝐘 𝐂𝐎𝐍𝐍𝐄𝐂𝐓𝐄𝐃
+> 𝐃𝐄𝐕 𝐏𝐎𝐏𝐊𝐈𝐃
 ┗━━━━━━━━━━━━━━━
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-❶ || 𝐶𝑟𝑒𝑎𝑡𝑜𝑟 = CHAMINDU
+𝐏𝐎𝐏𝐊𝐈𝐃 𝐏𝐑𝐎𝐉𝐄𝐂𝐓𝐒
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-❷ || YouTube Channel = https://youtube.com/@pinkqueenmd?si=jNSo4MO0ZfxZ_NZT
+𝐖𝐇𝐀𝐓𝐒𝐀𝐏𝐏 𝐏𝐀𝐆𝐄 = https://whatsapp.com/channel/0029Vb0rCUr72WU3uq0yMg42
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-📢 Support Channel: https://whatsapp.com/channel/0029Vb0rCUr72WU3uq0yMg42
-📩 Wanna talk? http://wa.me/94783314361
+𝐂𝐎𝐍𝐓𝐀𝐂𝐓 𝐌𝐄 𝐕𝐈𝐀
+𝐌𝐘 𝐋𝐈𝐍𝐊?https://wa.me/94783314361?
 ▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-© *PINk QUEEN MD* | _Do not share!_
-_Don't Forget To Give Star To My Repo_
-`;
-                    await Qr_Code_By_Wasi_Tech.sendMessage(Qr_Code_By_Wasi_Tech.user.id, { text: TREX_MD_TEXT }, { quoted: session });
+*CHAMINDU*
+_____________________________________
+	
+_DONT FORGET TO FORK AND STAR MY REPO_`
+	 await Qr_Code_By_Wasi_Tech.sendMessage(Qr_Code_By_Wasi_Tech.user.id,{text:WASI_MD_TEXT},{quoted:session})
 
-                    await delay(100);
-                    await Qr_Code_By_Wasi_Tech.ws.close();
-                    return removeFile("temp/" + id);
-                } else if (connection === "close" && lastDisconnect?.error?.output?.statusCode !== 401) {
-                    await delay(10000);
-                    WASI_MD_QR_CODE();
-                }
-            });
-        } catch (err) {
-            if (!res.headersSent) {
-                res.json({ code: "Service is Currently Unavailable" });
-            }
-            console.error("Error:", err);
-            removeFile("temp/" + id);
-        }
-    }
 
-    return WASI_MD_QR_CODE();
+
+					await delay(100);
+					await Qr_Code_By_Wasi_Tech.ws.close();
+					return await removeFile("temp/" + id);
+				} else if (connection === "close" && lastDisconnect && lastDisconnect.error && lastDisconnect.error.output.statusCode != 401) {
+					await delay(10000);
+					WASI_MD_QR_CODE();
+				}
+			});
+		} catch (err) {
+			if (!res.headersSent) {
+				await res.json({
+					code: "Service is Currently Unavailable"
+				});
+			}
+			console.log(err);
+			await removeFile("temp/" + id);
+		}
+	}
+	return await WASI_MD_QR_CODE()
 });
-
-module.exports = router;
+module.exports = router
