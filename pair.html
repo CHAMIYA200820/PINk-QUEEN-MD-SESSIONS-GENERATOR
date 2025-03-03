@@ -9,8 +9,8 @@
     body {
       margin: 0;
       overflow: hidden;
-      background: black;
-      font-family: Arial, sans-serif;
+      background: #000;
+      font-family: 'Arial', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -30,53 +30,88 @@
       position: relative;
       text-align: center;
       background: rgba(0, 0, 0, 0.8);
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(250, 249, 249, 0.7);
-      width: 300px;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 30px rgba(250, 249, 249, 0.7);
+      width: 350px;
+      font-size: 18px;
     }
 
     .input-container {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      margin-top: 10px;
+      margin-top: 20px;
     }
 
     .input-container input {
-      padding: 10px;
+      padding: 12px;
       border: none;
-      border-radius: 5px;
-      background: #222;
+      border-radius: 8px;
+      background: #333;
       color: white;
       text-align: center;
+      font-size: 18px;
     }
 
     .input-container button {
-      padding: 10px;
+      padding: 12px;
       border: none;
-      border-radius: 5px;
-      background: red;
+      border-radius: 8px;
+      background: #ff4b5c;
       color: white;
       cursor: pointer;
       font-weight: bold;
+      font-size: 16px;
     }
 
     .input-container button:hover {
-      background: yellow;
+      background: #ffcd38;
       color: black;
     }
 
+    /* Smooth Color Changing Text */
     .matrix-text {
-      font-size: 24px;
+      font-size: 36px;
       font-weight: bold;
-      color: lime;
-      animation: glitch 1s infinite alternate;
+      color: white;
+      animation: colorChange 5s linear infinite;
     }
 
-    @keyframes glitch {
-      0% { text-shadow: 2px 2px red, -2px -2px blue; }
-      100% { text-shadow: -2px -2px red, 2px 2px blue; }
+    @keyframes colorChange {
+      0% {
+        color: red;
+      }
+      10% {
+        color: orange;
+      }
+      20% {
+        color: yellow;
+      }
+      30% {
+        color: green;
+      }
+      40% {
+        color: blue;
+      }
+      50% {
+        color: purple;
+      }
+      60% {
+        color: pink;
+      }
+      70% {
+        color: cyan;
+      }
+      80% {
+        color: lime;
+      }
+      90% {
+        color: violet;
+      }
+      100% {
+        color: red;
+      }
     }
 
     /* Pairing Code Display */
@@ -84,40 +119,49 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-top: 10px;
-      gap: 10px;
+      margin-top: 20px;
+      gap: 15px;
     }
 
     .pair-code {
-      font-size: 20px;
+      font-size: 24px;
       font-weight: bold;
-      color: white;
+      color: #ff4b5c;
       background: #111;
-      padding: 5px 10px;
-      border-radius: 5px;
-      display: inline-block;
+      padding: 8px 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
     }
 
     .copy-btn {
-      padding: 5px 10px;
+      padding: 8px 15px;
       border: none;
-      border-radius: 5px;
-      background: lime;
+      border-radius: 8px;
+      background: #4bff65;
       color: black;
       cursor: pointer;
       font-weight: bold;
+      font-size: 16px;
     }
 
     .copy-btn:hover {
-      background: yellow;
+      background: #ffcd38;
     }
+
+    .pair-message {
+      color: white;
+      margin-top: 15px;
+    }
+
   </style>
 </head>
 <body>
   <canvas id="matrixCanvas"></canvas>
 
   <div class="container">
-    <h3 class="matrix-text">PINk_QUEEN_MD</h3>
+    <h3 class="matrix-text">PINk-QUEEN-MD</h3>
+    <p style="color:white;">MADE BY CHAMINDU CODER</p>
+
     <p style="color:white;">Enter Your Number with Country Code</p>
 
     <div class="input-container">
@@ -129,8 +173,8 @@
       <span class="pair-code" id="pair-code"></span>
       <button class="copy-btn" id="copy-btn">Copy</button>
     </div>
-    
-    <p id="pair-message" style="color:white; margin-top: 10px;"></p>
+
+    <p class="pair-message" id="pair-message"></p>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
@@ -142,7 +186,7 @@
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const matrixChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}PINk_QUEEN_MD";
+    const matrixChars = "美味しいけどよねとですけど大きなよねとかをですけどよな同じですって明日ですけあるいはありましたんだってことでしょうかなんだけどなぁ⚡⚡⚡⚡⚡";
     const fontSize = 16;
     const columns = canvas.width / fontSize;
     const drops = Array.from({ length: columns }).fill(1);
