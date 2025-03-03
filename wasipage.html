@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>PINk_QUEEN_MD</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PINk_QUEEN_MD</title>
+  
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
@@ -66,8 +67,6 @@
       margin: 15px;
       text-transform: uppercase;
       transition: all 0.3s ease-in-out;
-      position: relative;
-      overflow: hidden;
     }
 
     .btn:hover {
@@ -118,7 +117,6 @@
       align-items: center;
       margin: 20px 0;
     }
-
   </style>
 </head>
 <body>
@@ -126,26 +124,23 @@
   <div class="matrix"></div>
 
   <div class="container">
-    <!-- "PINk_QUEEN_MD" with sliding animation -->
     <h1>PINk_QUEEN_MD</h1>
     <p>Cyberpunk Tech Zone</p>
 
-    <!-- Centered Buttons Container -->
     <div class="btn-container">
-      <button onclick="window.open(`/wasiqr`)" class="btn">QR Code</button>
-      <button onclick="window.open(`/pair`)" class="btn">Pair Code</button>
+      <button onclick="window.open('/wasiqr')" class="btn">QR Code</button>
+      <button onclick="window.open('/pair')" class="btn">Pair Code</button>
     </div>
 
     <button class="btn music-btn" onclick="playMusic('song1')">🎵 Play Song 1</button>
     <button class="btn music-btn" onclick="playMusic('song2')">🎵 Play Song 2</button>
-
     <button class="btn" onclick="stopMusic()">🔊 Stop Music</button>
 
-    <button onclick="window.open(`https://github.com/CHAMIYA200820/Session-id`)" class="btn">වෙන විදිහට session id එක </button>
-    <button onclick="window.open(`https://github.com/CHAMIYA200820/PINk-QUEEN-MD.git`)" class="btn">Bot Repo</button>
-    <button onclick="window.open(`https://wa.me/94783314361?text=wa-bot✅🤔`)" class="btn">Contact Me</button>
-    <button onclick="window.open(`https://whatsapp.com/channel/0029VadQrNI8KMqo79BiHr3l`)" class="btn">Wa Channel</button>
-    <button onclick="window.open(`https://youtube.com/@pinkqueenmd?si=jNSo4MO0ZfxZ_NZT`)" class="btn">YT</button>
+    <button onclick="window.open('https://github.com/CHAMIYA200820/Session-id')" class="btn">වෙන_විදිහටට_session-id_එක</button>
+    <button onclick="window.open('https://github.com/CHAMIYA200820/PINk-QUEEN-MD.git')" class="btn">Bot Repo</button>
+    <button onclick="window.open('https://wa.me/94783314361?text=wa-bot✅🤔')" class="btn">Contact Me</button>
+    <button onclick="window.open('https://whatsapp.com/channel/0029VadQrNI8KMqo79BiHr3l')" class="btn">Wa Channel</button>
+    <button onclick="window.open('https://youtube.com/@pinkqueenmd?si=jNSo4MO0ZfxZ_NZT')" class="btn">YT</button>
   </div>
 
   <audio id="song1" class="music-player" loop>
@@ -157,18 +152,13 @@
   </audio>
 
   <script>
-    // Play the selected song
     function playMusic(song) {
-      // Stop any currently playing audio
       stopMusic();
-
-      // Play the selected song
       const audio = document.getElementById(song);
       audio.volume = 0.5;
       audio.play().catch(error => console.log("Autoplay Blocked", error));
     }
 
-    // Stop all music
     function stopMusic() {
       const audios = document.querySelectorAll('.music-player');
       audios.forEach(audio => audio.pause());
